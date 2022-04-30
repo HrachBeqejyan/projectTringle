@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import { Input } from './Components/Input/index';
+import { Canvas } from './Components/Canvas/index';
+import { ReverseBtn } from './Components/Reverse/index';
+import { tringle, reverseTringle } from './services/drawTringle'
+import { Fragment, useState } from 'react';
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+  const [value, setValue] = useState('');
+  const [tringleArr, setTringleArr] = useState([]);
+  const [isReversed, setIsReversed] = useState(true);
+
+  const handleChange = ({ target: { value } }) => {
+    setValue(value);
+    setTringleArr(tringle(value));
+  }
+
+  const toggleFun = () => {
+    if (!isReversed) {
+      setTringleArr(tringle(value));
+      setIsReversed(true);
+    } else {
+      setTringleArr(reverseTringle(value));
+      setIsReversed(false);
+    }
+  }
+
+  const canvas = tringleArr.map((item, index) => {
+    return <Fragment key={index}>{item}<br /></Fragment>
+  })
+
+  return <div className='container'>
+    <Input
+      handleChange={handleChange}
+    />
+
+    <Canvas
+      height={value}
+      tringleArr={tringleArr}
+      canvas={canvas}
+    />
+
+    <ReverseBtn
+      toggleFun={toggleFun}
+    />
+  </div>
 }
 
 export default App;

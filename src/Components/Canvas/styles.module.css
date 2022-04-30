@@ -1,0 +1,10 @@
+.canvas {
+    min-width: 540px;
+    min-height: 540px;
+    background-color: #F3F9FC;
+    border-radius: 8px;
+    color: blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
